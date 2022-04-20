@@ -51,7 +51,6 @@ void pop(list* lp) {
 	cir* prev = current;
 	 do{
 		if ((current->num) % 2 == 1) {
-			printf("%d ", current->num);
 			prev->link = current->link;
 			cir* temp = current;
 			current = current->link;

@@ -45,7 +45,7 @@ int main(void) {
 	printf("postfix expression : ");
 	int a = 0;
 	fputs("postfix expression : ",fpw);
-	while (EOF != (ch = fgetc(fp))) {
+	while (fscanf_s(fp,"%c",&ch,1) != EOF) {
 		expr[a++] = ch;
 		fputc(ch, stdout);
 		fputc(ch, fpw);
@@ -69,9 +69,9 @@ int eval(void) {
 	top = -1;
 
 	token = getToken(&symbol, &n);
-	while (token != eos) {
+	while (token != eos) { //end of stack -'/0'
 		if (token == operand)
-			push(symbol - '0');
+			push(symbol - '0');//숫자로 바꿔준다
 		else {
 			op2 = pop();
 			op1 = pop();

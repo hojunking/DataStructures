@@ -34,14 +34,14 @@ void push(int item) {
     stack[++top] = item;
 }
 
-int pop( s) {
-    if (is_empty(s))
+int pop() {
+    if (is_empty())
         exit(1);
     return stack[top--];
 }
 
-int peek( s) {
-    if (is_empty(s))
+int peek() {
+    if (is_empty())
         exit(1);
     return stack[top];
 }
