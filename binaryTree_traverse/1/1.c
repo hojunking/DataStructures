@@ -1,84 +1,93 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <stdlib.h>
+#define MAX_QUEUE 100
 
-typedef struct node* link;
+typedef struct node* nodeLink;
 
-typedef struct node{
-	link left;
-	link right;
-	char data;
-} node;
+typedef struct node {
+	nodeLink left, right;
+	char item;
+}node;
 
-
-void init(link root, char data) {
-	node* nNode = (node*)malloc(sizeof(node));
-	if (!nNode) return;
-
-	nNode->data = data;
-	root = nNode;
-	nNode->left = NULL;
-	nNode->right = NULL;
-	printf("init good = %c\n", root->data);
+nodeLink queue[MAX_QUEUE];
+nodeLink root = NULL;
+int front = -1, rear = -1;
+int isFull() {
+	return rear == MAX_QUEUE - 1;
 }
 
-void insertNode(link root,char data) {
-	node* nNode = (node*)malloc(sizeof(node));
-	if (!nNode) return;
-	nNode->data = data;
-	nNode->left = NULL;
-	nNode->right = NULL;
+int isEmpty() {
+	return front == rear;
+}
+void dequeue() {
+	front++;
+}
 
-	if (root->left == NULL) {
-		root->left = nNode;
+void makeTree(int n) {
+	root = queue[++front];
+	for (int i = 1; i < n; i++) {
+		if (queue[front]->left == NULL)
+			queue[front]->left = queue[i];
+		
+		else if(queue[front]->right == NULL) {
+			queue[front]->right = queue[i];
+			dequeue();
+		}
+		else {
+			printf("queueisEmpty!\n");
+			return;
+		}
 	}
-	else if (root->right == NULL) {
-		root->right = nNode;
-	}
-	else {
-		printf("»ðÀÔ½ÇÆÐ\n");
 	return;
-	}
 }
 
-void preorder(node* root) {
+void enqueue(char item) {
+	if (isFull()) printf("queue is Full!\n");
+
+	nodeLink nNode = (nodeLink)malloc(sizeof(node));
+	if (!nNode) return;
+	nNode->item = item;
+	nNode->left = NULL;
+	nNode->right = NULL;
+	queue[++rear] = nNode;
+	return;
+}
+
+void preorder(nodeLink root) {
 	if (root) {
-		printf("(%p : %p  %c  %p)\n", root->left, root->right, root->data, root);
+		printf("(%p %p %c %p)\n", root->left, root->right, root->item, root);
 		preorder(root->left);
 		preorder(root->right);
 	}
 }
-void inorder(node* root) {
+void inorder(nodeLink root) {
 	if (root) {
 		inorder(root->left);
-		printf("(%p : %p  %c  %p)\n", root->left, root->right, root->data, root);
+		printf("(%p %p %c %p)\n", root->left, root->right, root->item, root);
 		inorder(root->right);
 	}
 }
-void postorder(node* root) {
+void postorder(nodeLink root) {
 	if (root) {
 		postorder(root->left);
 		postorder(root->right);
-		printf("(%p : %p  %c  %p)\n", root->left, root->right, root->data, root);
+		printf("(%p %p %c %p)\n", root->left, root->right, root->item, root);
 	}
 }
 
-int main(void) {
-	printf("creating a complete binary tree\n");
-	link root = (link)malloc(sizeof(node));
-	root->left = NULL;
-	root->right = NULL;
-	root->data = 'A';
 
-	insertNode(root, 'B');
-	insertNode(root, 'C');
-	insertNode(root->left, 'D');
-	insertNode(root->left, 'E');
+int main(void) {
+	char list[] = { 'A','B','C','D','E' };
+	int n = sizeof(list);
+	for (int i = 0; i < n; i++)
+		enqueue(list[i]);
+	printf("creating a complete binary tree\n");
 	printf("three binary tree traversals\n");
+	makeTree(n);
 	printf("inorder traversal\t:\n");
 	inorder(root);
 	printf("\npreorder traversal\t:\n");
 	preorder(root);
 	printf("\npostorder traversal\t:\n");
 	postorder(root);
-
 }
