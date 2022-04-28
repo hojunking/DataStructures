@@ -7,7 +7,6 @@ typedef struct node* link;
 typedef struct node {
 	link left, right;
 	char item;
-	int visited;
 } node;
 
 typedef enum {
@@ -60,34 +59,29 @@ int iterative_preorder(link root) {
 int iterative_postorder(link root) {
 	top = -1;
 	int cnt = 0;
-	while (1)
-	{	
-		while(root != NULL && root->visited != 1)
-		{
+	link temp = NULL;
+	while (1) {
+		while (root) {
 			push(root);
-			cnt++;
 			root = root->left;
 		}
+		if (top == -1) break;
 		root = pop();
-
+		temp = root;
 		if (!root) break;
 
 		if (root->right != NULL) {
-			if (root->right->visited == 1) {
+			root = root->right;
+			cnt++;
 			printf("%c", root->item);
-			root->visited = 1;
-			root = NULL;
-			}
-			else {
-				cnt++;
-				push(root);
-				root = root->right;
-			}
+			cnt++;
+			printf("%c", temp->item);
+			root = root->right;
 		}
 		else {
-			printf("%c", root->item);
-			root->visited = 1;
-			root = NULL;
+			root = root->right;
+			cnt++;
+			printf("%c", temp->item);
 		}
 	}
 	return cnt;

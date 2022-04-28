@@ -80,7 +80,7 @@ link eval(void) {
 }
 
 void iterPreorder(link root) {
-	int top = -1;
+	top = -1;
 	while (1) {
 		while (root) {
 			printf("%c", root->data);
@@ -93,7 +93,7 @@ void iterPreorder(link root) {
 	}
 }
 void iterInorder(link root) {
-	int top = -1;
+	top = -1;
 	while (1) {
 		while (root) {
 			push(root);
@@ -105,6 +105,37 @@ void iterInorder(link root) {
 		root = root->right;
 	}
 }
+void iterPostorder(link root) {
+	top = -1;
+	int cnt = 0;
+	link temp =NULL;
+	while (1) {
+		while (root) {
+			push(root);
+			root = root->left;
+		}
+		if (top == -1) break;
+		root = pop();
+		temp = root;
+		if (!root) break;
+
+		if (root->right != NULL) {
+			root = root->right;
+			cnt++;
+			printf("%c", root->data);
+			cnt++;
+			printf("%c", temp->data);
+			root = root->right;
+		}
+		else {
+			root = root->right;
+			cnt++;
+			printf("%c", temp->data);
+		}
+	}
+	printf("\n%d", cnt);
+}
+
 
 int main(void) {
 	FILE* fp;
@@ -123,5 +154,7 @@ int main(void) {
 	iterPreorder(root);
 	printf("\ninorder traversal\t:");
 	iterInorder(root);
+	printf("\npostorder traversal\t:");
+	iterPostorder(root);
 		
 }
