@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2.c">
+    <ClCompile Include="min_heap.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
