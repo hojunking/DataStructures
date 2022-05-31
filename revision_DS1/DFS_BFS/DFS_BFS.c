@@ -14,9 +14,8 @@ typedef struct node {
 
 link graph[MAX] = { NULL };
 int visited[MAX] = { 0, };
-int n, l, front, rear;
 int queue[MAX];
-
+int rear, front, n, l;
 
 void makeAdj(int v, int e) {
 	link nNode = (link)malloc(sizeof(node));
@@ -30,7 +29,7 @@ void makeAdj(int v, int e) {
 void printList() {
 	for (int i = 0; i < n; i++) {
 		link tmp = graph[i];
-		printf("[%d] -> ",i);
+		printf("[%d] ->", i);
 		while (tmp) {
 			printf("%d ", tmp->vertax);
 			tmp = tmp->path;
@@ -39,13 +38,13 @@ void printList() {
 	}
 }
 
-void DFS(int v) {
+void BFS(int v) {
 	visited[v] = 1;
 	link tmp = graph[v];
 	printf("%d ", v);
 	while (tmp) {
 		if (!visited[tmp->vertax])
-			DFS(tmp->vertax);
+			BFS(tmp->vertax);
 		tmp = tmp->path;
 	}
 }
@@ -60,25 +59,27 @@ int pop() {
 	return queue[++front];
 }
 
-void BFS(int v) {
+
+void DFS(int v) {
 	front = rear = -1;
-	visited[v] = 1;
 	link tmp = graph[v];
 	printf("%d ", v);
+	visited[v] = 1;
 	push(v);
-	while (!IS_FULL(front, rear)) {
+	while (!IS_EMPTY(front, rear)) {
 		v = pop();
 		tmp = graph[v];
 		while (tmp) {
-			if (visited[tmp->vertax]) {
-				visited[tmp->vertax] = 1;
+			if (!visited[tmp->vertax]) {
 				push(tmp->vertax);
 				printf("%d ", tmp->vertax);
+				visited[tmp->vertax] =1;
 			}
 			tmp = tmp->path;
 		}
 	}
 }
+
 int main(void) {
 	FILE* fp;
 	if (fopen_s(&fp, "input.txt", "r"))
