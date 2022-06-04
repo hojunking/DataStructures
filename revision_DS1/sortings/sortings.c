@@ -79,14 +79,34 @@ void printList(int list[]) {
 	printf(" ]\n");
 }
 
+void makeSorted(int a[])
+{
+	int i = 0, j = 0, temp = 0;
+	while (a[i] != -1)
+	{
+		for (j = 0; i < MAX - j; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				temp = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = temp;
+				break;
+			}
+		}
+		i++;
+	}
+
+}
+
 
 int main(void) {
-	int list[MAX] = { 10,1,9,2,8,3,7,4,6,5 };
+	int list[MAX] = { 10,1,9,2,8,3,7,4,6,-1 };
 	printf("before : \n");
 	printList(list);
 
-	//insertion_sort(list);
-	merge_sort(list, 0, MAX - 1);
+	makeSorted(list);
+	//merge_sort(list, 0, MAX - 1);
 
 	printf("\nsorted : \n");
 	printList(list);

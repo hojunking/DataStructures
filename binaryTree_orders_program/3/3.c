@@ -106,7 +106,7 @@ link eval(void) {
 	int n = 0;
 	precedence token = getToken(&symbol, &n);
 	while (token != eos) {
-		if (token == operand) {
+		if (token == operand) {  
 			link nNode = (link)malloc(sizeof(node));
 			if (!nNode) return;
 
