@@ -12,6 +12,7 @@ typedef struct node* link;
 typedef struct node {
 	char data;
 	link left, right;
+	int visited;
 } node;
 
 typedef enum {
@@ -42,6 +43,7 @@ link eval(void) {
 		link nNode = (link)malloc(sizeof(node));
 		if (!nNode) exit(1);
 		nNode->data = symbol;
+		nNode->visited = 0;
 
 		if (symbol =='+'|| symbol == '-'||
 			symbol == '*'|| symbol == '%'||
@@ -75,6 +77,7 @@ void iterative_preorder(link root) {
 }
 
 void iterative_postorder(link root) {
+	//memset(S, NULL, MAX);
 	top = -1;
 	link tmp = NULL;
 	while (1) {
@@ -86,15 +89,21 @@ void iterative_postorder(link root) {
 		if (!root) break;
 		tmp = root;
 
-		if (root->right) {
+		if (root->right && root->right->visited == 0) {
 			root = root->right;
-			printf("%c", root->data);
-			printf("%c", tmp->data);
-			root = root->right;
+
+			if (!root->left) {
+				printf("%c", root->data);
+				printf("%c", tmp->data);
+				tmp->visited = 1;
+				root = root->right;
+			}
+			else push(tmp);
 		}
 		else {
-			root = root->right;
-			printf("%c", tmp->data);
+			printf("%c", root->data);
+			root->visited = 1;
+			root = NULL;
 		}
 	}
 }
