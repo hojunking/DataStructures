@@ -3,19 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX 50
-#define IS_FULL(rear) (rear == MAX-1)
-#define IS_EMPTY(front, rear) (front == rear)
+#define Q_FULL(rear) (rear == MAX-1)
+#define Q_EMPTY(front, rear) (front == rear)
 
 typedef struct node* link;
 typedef struct node {
-	int vertax;
 	link path;
+	int vertax;
 } node;
 
 link graph[MAX] = { NULL };
-int visited[MAX] = { 0, };
-int queue[MAX];
-int rear, front, n, l;
+int front, rear, n, l;
+int visited[MAX] = {0,}, queue[MAX];
 
 void makeAdj(int v, int e) {
 	link nNode = (link)malloc(sizeof(node));
@@ -29,7 +28,7 @@ void makeAdj(int v, int e) {
 void printList() {
 	for (int i = 0; i < n; i++) {
 		link tmp = graph[i];
-		printf("[%d] ->", i);
+		printf("[%d] -> ", i);
 		while (tmp) {
 			printf("%d ", tmp->vertax);
 			tmp = tmp->path;
@@ -37,46 +36,44 @@ void printList() {
 		printf("\n");
 	}
 }
+void push(int v) {
+	if (Q_FULL(rear)) exit(1);
+	queue[++rear] = v;
+}
+
+int pop() {
+	if (Q_EMPTY(front, rear)) exit(1);
+	return queue[++front];
+}
 
 void BFS(int v) {
+	front = rear = -1;
+	visited[v] = 1;
+	link tmp = graph[v];
+	printf("%d ", v);
+	push(v);
+	while (!Q_EMPTY(front,rear)) {
+		v = pop();
+		tmp = graph[v];
+		while (tmp) {
+			if (!visited[tmp->vertax]) {
+				printf("%d ", tmp->vertax);
+				push(tmp->vertax);
+				visited[tmp->vertax] =1;
+			}
+			tmp = tmp->path;
+		}
+	}
+}
+
+void DFS(int v) {
 	visited[v] = 1;
 	link tmp = graph[v];
 	printf("%d ", v);
 	while (tmp) {
 		if (!visited[tmp->vertax])
-			BFS(tmp->vertax);
+			DFS(tmp->vertax);
 		tmp = tmp->path;
-	}
-}
-
-void push(int item) {
-	if (IS_FULL(rear)) exit(1);
-	queue[++rear] = item;
-}
-
-int pop() {
-	if (IS_EMPTY(front, rear)) exit(1);
-	return queue[++front];
-}
-
-
-void DFS(int v) {
-	front = rear = -1;
-	link tmp = graph[v];
-	printf("%d ", v);
-	visited[v] = 1;
-	push(v);
-	while (!IS_EMPTY(front, rear)) {
-		v = pop();
-		tmp = graph[v];
-		while (tmp) {
-			if (!visited[tmp->vertax]) {
-				push(tmp->vertax);
-				printf("%d ", tmp->vertax);
-				visited[tmp->vertax] =1;
-			}
-			tmp = tmp->path;
-		}
 	}
 }
 

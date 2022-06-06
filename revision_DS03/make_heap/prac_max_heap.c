@@ -1,22 +1,22 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#define MAX_HEAP 20
-#define HEAP_FULL(n) (n == MAX_HEAP -1)
+#include <stdlib.h>
+#include <string.h>
+#define MAX 20
+#define HEAP_FULL(n) (n == MAX-1)
 #define HEAP_EMPTY(n) (!n)
 
-typedef struct element {
+typedef struct element{
 	int key;
 } element;
-
-element heap[MAX_HEAP] = { NULL };
 int n;
+element heap[MAX] = { NULL };
 
 void push(int item) {
 	if (HEAP_FULL(n)) exit(1);
 
 	int i = ++n;
-	
-	while (i != 1 && item < heap[i / 2].key) {
+	while (i != 1 && item > heap[i / 2].key) {
 		heap[i] = heap[i / 2];
 		i /= 2;
 	}
@@ -31,9 +31,10 @@ int pop() {
 	element data = heap[parent];
 
 	while (child <= n) {
-		if ((child < n) && (heap[child].key > heap[child + 1].key))
+		if ((child <n) && heap[child].key < heap[child + 1].key)
 			child++;
-		if (tmp.key < heap[child].key) break;
+
+		if (tmp.key > heap[child].key) break;
 		heap[parent] = heap[child];
 		parent = child;
 		child *= 2;
@@ -42,10 +43,10 @@ int pop() {
 	return data.key;
 }
 
-int main(void) {
+int main(void){
 	FILE* fp;
-	if (fopen_s(&fp, "input.txt", "r"))
-		exit(1);
+
+	if(fopen_s(&fp, "input.txt", "r")) exit(1);
 	int t;
 	printf("***** insertion into a max heap *****\n");
 	while (fscanf_s(fp, "%d ", &t) != EOF) {
