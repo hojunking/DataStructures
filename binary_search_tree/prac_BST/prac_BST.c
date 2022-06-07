@@ -49,9 +49,38 @@ void insert_node(int key) {
 	}
 }
 
+link delete_node(link root,int key) {
+	if (!root) return root;
+	if (key < root->data.key)
+		root->left = delete_node(root->left, key);
+	else if (key > root->data.key)
+		root->right = delete_node(root->right, key);
+	else {
+		if (!root->left) {
+			link tmp = root->right;
+			free(root);
+			return tmp;
+		}
+		else if (!root->right) {
+			link tmp = root->left;
+			free(root);
+			return tmp;
+		}
+
+		link current = root->right;
+		while (current->left) 
+			current = current->left;
+
+
+		link tmp = current;
+		root->data.key = tmp->data.key;
+		root->right = delete_node(root->right, tmp->data.key);
+	}
+	return root;
+}
+
 int BST_search(int key) {
 	link tmp = root;
-
 	while (tmp) {
 		if (key == tmp->data.key) return 1;
 		else if (key > tmp->data.key) {
@@ -61,6 +90,18 @@ int BST_search(int key) {
 	}
 	return 0;
 }
+
+int BST_search_recursive(link root, int key) {
+	if (root) {
+		if (key == root->data.key) return 1;
+		else if (key > root->data.key)
+			return BST_search_recursive(root->right, key);
+		else return BST_search_recursive(root->left, key);
+	}
+	return 0;
+}
+
+
 
 void inorder(link root) {
 	if (root) {
@@ -81,7 +122,11 @@ int main(void) {
 	int b, result;
 	do {
 		scanf_s("%d", &b);
-		BST_search(b) ? printf("있다\n") : printf("없다\n");
+		result = BST_search_recursive(root, b);
+		result ? printf("Yes\n") : printf("No\n");
+		
+		if (result) root = delete_node(root, b);
+		inorder(root);
 	} while (b);
 
 
