@@ -30,6 +30,18 @@ void quick_sort(int list[], int left, int right) {
 	}
 }
 
+void selection_sort(int list[]) {
+	int n = MAX;
+	for(int i=0; i <n; i++){
+		int least = i;
+		for (int j = i + 1; j < n; j++)
+			if (list[j] < list[least])
+				least = j;
+		if (least != i)
+			SWAP(list[i], list[least], tmp);
+	}
+}
+
 void printList(int list[]) {
 	printf("[");
 	for (int i = 0; i < n; i++)
@@ -43,9 +55,9 @@ int main(void) {
 	printf("before : \n");
 	printList(list);
 
-	//insertion_sort(list);
+	selection_sort(list);
 	//merge_sort(list, 0, MAX - 1);
-	quick_sort(list, 0, n - 1);
+	//quick_sort(list, 0, n - 1);
 
 	printf("\nsorted : \n");
 	printList(list);
