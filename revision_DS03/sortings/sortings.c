@@ -55,9 +55,9 @@ int main(void) {
 	printf("before : \n");
 	printList(list);
 
-	selection_sort(list);
+	//selection_sort(list);
 	//merge_sort(list, 0, MAX - 1);
-	//quick_sort(list, 0, n - 1);
+	quick_sort(list, 0, n - 1);
 
 	printf("\nsorted : \n");
 	printList(list);
