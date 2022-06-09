@@ -14,7 +14,7 @@ void insertion_sort(int list[]) {
 
 int partition(int list[], int left, int right) {
 	int j = left, pivot = list[left];
-	for (int i = j + 1; i < n; i++)
+	for (int i = j + 1; i <=right ; i++)
 		if (list[i] < pivot) {
 			j++;
 			SWAP(list[i], list[j], tmp);

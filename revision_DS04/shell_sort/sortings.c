@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #define MAX 11
-#define SWAP (x,y,t) (t=x,x=y,y=t)
+#define SWAP(x,y,t) (t=x,x=y,y=t)
 
 
 int n = MAX;
@@ -25,15 +25,15 @@ void shell_sort(int list[]) {
 			insertion_sort(list, i, gap);
 	}
 }
+
 int partition(int list[], int left, int right) {
-	int tmp,j = left, pivot = list[left];
-	for (int i = j+1; i <= right; i++) {
+	int j = left, tmp,pivot = list[left];
+	for(int i = j +1; i <=right; i++)
 		if (list[i] < pivot) {
 			j++;
-			SWAP(list[j], list[i], tmp);
+			SWAP(list[i], list[j], tmp);
 		}
-	}
-	SWAP(list[left], list[i], tmp);
+	SWAP(list[left], list[j], tmp);
 }
 
 void quick_sort(int list[], int left, int right) {
@@ -54,7 +54,8 @@ int main(void) {
 		printf("%5d", list[i]);
 	printf("\n");
 
-	shell_sort(list);
+	//shell_sort(list);
+	quick_sort(list, 0, n - 1);
 
 	for (int i = 0; i < n; i++)
 		printf("%5d", list[i]);
