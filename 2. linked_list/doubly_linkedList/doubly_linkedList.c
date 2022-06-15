@@ -84,10 +84,10 @@ int main(void) {
 	if (fopen_s(&fp, "input.txt", "r"))
 		exit(1);
 	int temp;
-	while (fscanf_s(fp, "%d", &temp) !=EOF) {
+	while (fscanf_s(fp, "%d", &temp) !=EOF)
 		insertData(header, temp);
-		//printf("%d ", temp);
-	}
+
+
 	printf("After creating a doubly linked circular list with a head node : \n");
 	printForward(header);
 	printBack(header);
