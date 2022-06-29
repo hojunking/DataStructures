@@ -5,6 +5,10 @@
 #define MAX_QUEUE_SIZE 3
 #define MAX_NAME_SIZE 20
 #define MAX_LEN 50
+/*
+	limited queue & data shifting
+*/
+
 typedef struct Element {
 	int id;
 	char name[MAX_NAME_SIZE];
@@ -87,7 +91,7 @@ int main(void) {
 
 		}
 		else if (!strcmp(op, "quit")) {
-			printf("Á¾·á");
+			printf("ï¿½ï¿½ï¿½ï¿½");
 			break;
 		}
 		else
