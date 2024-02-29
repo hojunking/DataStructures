@@ -1,2 +1,4 @@
-## DataStructures
-#### C_language / array, stack, queue, linked_list, binary_tree, BST, Heap, graph, MST algorithms, sortings / [notion_datastructures](https://hojunking.notion.site/a7f35823e96a4d008d4b5e143e478fbe?v=2baea86811eb49adaf3665adb37948c4)
+## Data Structures
+- Prof. Kim’s Data structure concept and practical coding lectures for 1st semester 2022
+- **Record in Notion [[Link]](https://hojunking.notion.site/DataStructure-07fa04aa9e724d0e841a6054d20000d9?pvs=4)**
+- Record & Practice array, stack, queue, linked_list, binary_tree, BST, Heap, graph, MST algorithms, sortings by **C language**
